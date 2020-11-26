@@ -4,6 +4,7 @@
 
 - name: Create Jenkins multiple docker images
   hosts: localhost
+  become: true
   gather_facts: no
 
   vars:
@@ -47,6 +48,9 @@
         - "{{ prod_port_1 }}:8080"
         # Publish container port 50000 as host port 50001
         - "{{ jnlp_port_1 }}:50000"
+      env:
+        JENKINS_OPTS: "--httpListenAddress=127.0.0.1" 
+        JAVA_OPTS: "-Dhudson.footerURL=Jenkins-1"
 
   - name: "Create Jenkins 2 Prod Container"
     community.general.docker_container:
@@ -59,6 +63,9 @@
         - "{{ prod_port_2 }}:8080"
         # Publish container port 50000 as host port 50002
         - "{{ jnlp_port_2 }}:50000"
+      env:
+        JENKINS_OPTS: "--httpListenAddress=127.0.0.1"
+        JAVA_OPTS: "-Dhudson.footerURL=Jenkins-2"
   
   - name: "Remove Jenkins Prod 1 Container"
     community.general.docker_container:
