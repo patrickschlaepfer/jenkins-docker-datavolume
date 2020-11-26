@@ -49,6 +49,9 @@
     community.general.docker_volume:
       name: "{{ prod_vol_1 }}"
 
+  - name: "Copy jenkins-set-url-and-email.groovy into data-volume"
+    shell: "docker cp jenkins-set-url-and-email.groovy {{ prod_vol_1 }}:/init.groovy.d/jenkins-set-url-and-email.groovy"
+
   - name: "Create jenkins-home-2-prod Volume"
     community.general.docker_volume:
       name: "{{ prod_vol_2 }}"
@@ -66,7 +69,7 @@
         - "{{ jnlp_port_1 }}:50000"
       env:
         JENKINS_OPTS: "--prefix=/node1" 
-        JAVA_OPTS: "-Dhudson.footerURL=Jenkins-1 -Djenkins.install.runSetupWizard=false"
+        JAVA_OPTS: "-Dhudson.footerURL=http://18.193.172.241/node1 -Djenkins.install.runSetupWizard=false"
 
   - name: "Create Jenkins 2 Prod Container"
     community.general.docker_container:
@@ -81,7 +84,7 @@
         - "{{ jnlp_port_2 }}:50000"
       env:
         JENKINS_OPTS: "--prefix=/node2"
-        JAVA_OPTS: "-Dhudson.footerURL=Jenkins-2 -Djenkins.install.runSetupWizard=false"
+        JAVA_OPTS: "-Dhudson.footerURL=http://18.193.172.241/node2 -Djenkins.install.runSetupWizard=false"
   
   - name: "Remove Jenkins Prod 1 Container"
     community.general.docker_container:

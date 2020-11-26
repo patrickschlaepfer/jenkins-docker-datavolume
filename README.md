@@ -125,3 +125,7 @@ $ ansible-playbook playbook.yml
 ```
 $ docker exec -it jenkins_prod ls -lrt /var/jenkins_home
 ```
+
+### Konfig Dateien in das Volume kopieren
+
+/init.groovy.d/basic-security.groovy
