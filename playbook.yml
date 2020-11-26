@@ -69,7 +69,7 @@
         JAVA_OPTS: "-Dhudson.footerURL=http://18.193.172.241/node1 -Djenkins.install.runSetupWizard=false"
 
   - name: "Copy jenkins-set-url-and-email.groovy into data-volume"
-    shell: "docker cp jenkins-set-url-and-email.groovy {{ prod_name_1 }}:/init.groovy.d/jenkins-set-url-and-email.groovy"
+    shell: "docker cp jenkins-set-url-and-email.groovy {{ prod_name_1 }}:/var/jenkins_home/init.groovy.d/jenkins-set-url-and-email.groovy"
 
   - name: "Create Jenkins 2 Prod Container"
     community.general.docker_container:
