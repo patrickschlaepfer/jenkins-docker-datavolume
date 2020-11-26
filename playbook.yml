@@ -13,6 +13,11 @@
     prod_name: "jenkins_prod"
 
   tasks:
+  - name: "Install nginx"
+    apt:
+      name: nginx
+      state: present
+
   - name: "Create jenkins-home-prod Volume"
     community.general.docker_volume:
       name: "{{ prod_vol }}"
@@ -26,6 +31,8 @@
       ports:
         # Publish container port 8080 as host port 9090
         - "9090:8080"
+        # Publish container port 50000 as host port 50000
+        - "50001:50000"
   
   - name: "Remove Jenkins Prod Container"
     community.general.docker_container:
