@@ -51,6 +51,28 @@ rmvirtualenv name_of_your_env
 cpvirtualenv old_virtual_env new_virtual_env
 ```
 
+### Erstellen venv für ansible 2.10
+
+```
+$ mkvirtualenv ansible2_10
+$ pip install ansible
+$ pip install docker
+```
+
+### Tweaking Python
+
+```
+cd /tmp
+apt-get download python3-apt
+dpkg -x python3-apt_0.9.3.5ubuntu3_amd64.deb python3-apt
+
+cp -r /tmp/python3-apt/usr/lib/python3/dist-packages/* /home/ubuntu/python3.6.8-venv/lib/python3.6/site-packages/
+
+cd /home/ubuntu/python3.6.8-venv/lib/python3.6/site-packages/
+mv apt_pkg.cpython-34m-x86_64-linux-gnu.so apt_pkg.so
+mv apt_inst.cpython-34m-x86_64-linux-gnu.so apt_inst.so
+```
+
 ## Installation Docker
 
 Anleitung: https://docs.docker.com/engine/install/ubuntu/
