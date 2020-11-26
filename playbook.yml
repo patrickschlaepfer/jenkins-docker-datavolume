@@ -68,7 +68,7 @@
         JENKINS_OPTS: "--prefix=/node1" 
         JAVA_OPTS: "-Dhudson.footerURL=http://18.193.172.241/node1 -Djenkins.install.runSetupWizard=false"
   
-  - name: "Copy jenkins-set-url-and-email.groovy into data-volume"
+  - name: "Create startup init.groovy.directory"
     shell: "docker exec {{ prod_name_1 }} mkdir -p /var/jenkins_home/init.groovy.d"
 
   - name: "Copy jenkins-set-url-and-email.groovy into data-volume"

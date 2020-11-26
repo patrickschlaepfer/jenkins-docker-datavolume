@@ -128,4 +128,7 @@ $ docker exec -it jenkins_prod ls -lrt /var/jenkins_home
 
 ### Konfig Dateien in das Volume kopieren
 
-/init.groovy.d/basic-security.groovy
+
+### Jenkins Groovy Config
+
+https://github.com/lean-delivery/ansible-role-jenkins
