@@ -7,10 +7,20 @@
   gather_facts: no
 
   vars:
-    dev_vol: "jenkins-home-dev"
-    prod_vol: "jenkins-home-prod"
-    dev_name: "jenkins_dev"
-    prod_name: "jenkins_prod"
+    # Jenkins für Team 1
+    dev_vol_1: "jenkins-1-home-dev"
+    prod_vol_1: "jenkins-1-home-prod"
+    dev_name_1: "jenkins-1-dev"
+    prod_name_1: "jenkins-1-prod"
+    prod_port_1: "9090"
+    jnlp_port_1: "50001"
+    # Jenkins für Team 2
+    dev_vol_2: "jenkins-home-dev"
+    prod_vol_2: "jenkins-home-prod"
+    dev_name_2: "jenkins_dev"
+    prod_name_2: "jenkins_prod"
+    prod_port_2: "9091"
+    jnlp_port_2: "50002"
 
   tasks:
   - name: "Install nginx"
@@ -18,30 +28,58 @@
       name: nginx
       state: present
 
-  - name: "Create jenkins-home-prod Volume"
+  - name: "Create jenkins-home-1-prod Volume"
     community.general.docker_volume:
-      name: "{{ prod_vol }}"
+      name: "{{ prod_vol_1 }}"
 
-  - name: "Create Jenkins Prod Container"
+  - name: "Create jenkins-home-2-prod Volume"
+    community.general.docker_volume:
+      name: "{{ prod_vol_2 }}"
+
+  - name: "Create Jenkins 1 Prod Container"
     community.general.docker_container:
-      name: "{{ prod_name }}"
+      name: "{{ prod_name_1 }}"
       image: jenkins/jenkins:lts
       volumes:
-        - "{{ prod_vol }}:/var/jenkins_home"
+        - "{{ prod_vol_1 }}:/var/jenkins_home"
       ports:
         # Publish container port 8080 as host port 9090
-        - "9090:8080"
-        # Publish container port 50000 as host port 50000
-        - "50001:50000"
-  
-  - name: "Remove Jenkins Prod Container"
+        - "{{ prod_port_1 }}:8080"
+        # Publish container port 50000 as host port 50001
+        - "{{ jnlp_port_1 }}:50000"
+
+  - name: "Create Jenkins 2 Prod Container"
     community.general.docker_container:
-      name: "{{ prod_name }}"
+      name: "{{ prod_name_2 }}"
+      image: jenkins/jenkins:lts
+      volumes:
+        - "{{ prod_vol_2 }}:/var/jenkins_home"
+      ports:
+        # Publish container port 8080 as host port 9091
+        - "{{ prod_port_2 }}:8080"
+        # Publish container port 50000 as host port 50002
+        - "{{ jnlp_port_2 }}:50000"
+  
+  - name: "Remove Jenkins Prod 1 Container"
+    community.general.docker_container:
+      name: "{{ prod_name_1 }}"
       state: absent
     tags: [ 'never', 'destroy' ]
 
-  - name: "Remove jenkins-home-prod Volume" 
+  - name: "Remove Jenkins Prod 2 Container"
+    community.general.docker_container:
+      name: "{{ prod_name_2 }}"
+      state: absent
+    tags: [ 'never', 'destroy' ]
+
+  - name: "Remove jenkins-home-1-prod Volume" 
     community.general.docker_volume:
-      name: "{{ prod_vol }}" 
+      name: "{{ prod_vol_1 }}" 
+      state: absent
+    tags: [ 'never', 'destroy' ]
+
+  - name: "Remove jenkins-home-2-prod Volume" 
+    community.general.docker_volume:
+      name: "{{ prod_vol_2 }}" 
       state: absent
     tags: [ 'never', 'destroy' ]
