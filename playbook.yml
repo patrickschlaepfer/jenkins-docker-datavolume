@@ -65,7 +65,7 @@
         # Publish container port 50000 as host port 50001
         - "{{ jnlp_port_1 }}:50000"
       env:
-        JENKINS_OPTS: "--httpListenAddress=127.0.0.1" 
+        # JENKINS_OPTS: "--httpListenAddress=127.0.0.1" 
         JAVA_OPTS: "-Dhudson.footerURL=Jenkins-1"
 
   - name: "Create Jenkins 2 Prod Container"
@@ -80,7 +80,7 @@
         # Publish container port 50000 as host port 50002
         - "{{ jnlp_port_2 }}:50000"
       env:
-        JENKINS_OPTS: "--httpListenAddress=127.0.0.1"
+        # JENKINS_OPTS: "--httpListenAddress=127.0.0.1"
         JAVA_OPTS: "-Dhudson.footerURL=Jenkins-2"
   
   - name: "Remove Jenkins Prod 1 Container"
