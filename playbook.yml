@@ -9,11 +9,29 @@
   vars:
     dev_vol: "jenkins-home-dev"
     prod_vol: "jenkins-home-prod"
+    dev_name: "jenkins_dev"
+    prod_name: "jenkins_prod"
 
   tasks:
   - name: "Create jenkins-home-prod Volume"
     community.general.docker_volume:
       name: "{{ prod_vol }}"
+
+  - name: "Create Jenkins Prod Container"
+    community.general.docker_container:
+      name: "{{ prod_name }}"
+      image: jenkins/jenkins:lts
+      volumes:
+        - "{{ prod_vol }}:/var/jenkins_home"
+      ports:
+        # Publish container port 8080 as host port 9090
+        - "9090:8080"
+  
+  - name: "Remove Jenkins Prod Container"
+    community.general.docker_container:
+      name: "{{ prod_name }}"
+      state: absent
+    tags: [ 'never', 'destroy' ]
 
   - name: "Remove jenkins-home-prod Volume" 
     community.general.docker_volume:
