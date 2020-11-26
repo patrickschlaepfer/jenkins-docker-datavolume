@@ -49,6 +49,9 @@
     community.general.docker_volume:
       name: "{{ prod_vol_1 }}"
 
+  - name: "Create groovy.init.d directory"
+    shell: "docker exec {{ prod_vol_1 }} mkdir -p /init.groovy.d"
+
   - name: "Copy jenkins-set-url-and-email.groovy into data-volume"
     shell: "docker cp jenkins-set-url-and-email.groovy {{ prod_vol_1 }}:/init.groovy.d/jenkins-set-url-and-email.groovy"
 
