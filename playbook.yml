@@ -66,7 +66,7 @@
         - "{{ jnlp_port_1 }}:50000"
       env:
         JENKINS_OPTS: "--prefix=/node1" 
-        JAVA_OPTS: "-Dhudson.footerURL=Jenkins-1"
+        JAVA_OPTS: "-Dhudson.footerURL=Jenkins-1 -Djenkins.install.runSetupWizard=false"
 
   - name: "Create Jenkins 2 Prod Container"
     community.general.docker_container:
@@ -81,7 +81,7 @@
         - "{{ jnlp_port_2 }}:50000"
       env:
         JENKINS_OPTS: "--prefix=/node2"
-        JAVA_OPTS: "-Dhudson.footerURL=Jenkins-2"
+        JAVA_OPTS: "-Dhudson.footerURL=Jenkins-2 -Djenkins.install.runSetupWizard=false"
   
   - name: "Remove Jenkins Prod 1 Container"
     community.general.docker_container:
