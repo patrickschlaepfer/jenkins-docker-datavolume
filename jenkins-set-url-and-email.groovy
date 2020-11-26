@@ -1,8 +1,10 @@
 #!groovy
 
 // imports
-import jenkins.model.Jenkins
-import jenkins.model.JenkinsLocationConfiguration
+import jenkins.model.*
+import hudson.security.*
+import jenkins.model.IdStrategy
+
 
 // parameters
 def jenkinsParameters = [
@@ -21,3 +23,11 @@ jenkinsLocationConfiguration.setAdminAddress(jenkinsParameters.email)
 
 // save current Jenkins state to disk
 jenkinsLocationConfiguration.save()
+
+def instance = Jenkins.getInstance()
+
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+hudsonRealm.createAccount("jenkins","jenkins123")
+
+instance.setSecurityRealm(hudsonRealm)
+instance.save()
