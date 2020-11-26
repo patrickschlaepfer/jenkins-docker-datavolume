@@ -49,12 +49,6 @@
     community.general.docker_volume:
       name: "{{ prod_vol_1 }}"
 
-  - name: "Create groovy.init.d directory"
-    shell: "docker exec {{ prod_vol_1 }} mkdir -p /init.groovy.d"
-
-  - name: "Copy jenkins-set-url-and-email.groovy into data-volume"
-    shell: "docker cp jenkins-set-url-and-email.groovy {{ prod_vol_1 }}:/init.groovy.d/jenkins-set-url-and-email.groovy"
-
   - name: "Create jenkins-home-2-prod Volume"
     community.general.docker_volume:
       name: "{{ prod_vol_2 }}"
@@ -73,6 +67,9 @@
       env:
         JENKINS_OPTS: "--prefix=/node1" 
         JAVA_OPTS: "-Dhudson.footerURL=http://18.193.172.241/node1 -Djenkins.install.runSetupWizard=false"
+
+  - name: "Copy jenkins-set-url-and-email.groovy into data-volume"
+    shell: "docker cp jenkins-set-url-and-email.groovy {{ prod_vol_1 }}:/init.groovy.d/jenkins-set-url-and-email.groovy"
 
   - name: "Create Jenkins 2 Prod Container"
     community.general.docker_container:
