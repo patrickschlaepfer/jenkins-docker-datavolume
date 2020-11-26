@@ -12,7 +12,7 @@ server {
     proxy_pass http://18.193.172.241:{{ prod_port_1 }};
     proxy_read_timeout 90s;
     # Fix potential "It appears that your reverse proxy set up is broken" error.
-    proxy_redirect http://18.193.172.241:{{ prod_port_1 }} http://18.193.172.241;
+    proxy_redirect http://18.193.172.241:{{ prod_port_1 }} http://18.193.172.241/node1;
   }
 
   location /node2 {
@@ -20,7 +20,7 @@ server {
     proxy_pass http://127.0.0.1:{{ prod_port_2 }};
     proxy_read_timeout 90s;
     # Fix potential "It appears that your reverse proxy set up is broken" error.
-    proxy_redirect http://127.0.0.1:{{ prod_port_2 }} http://18.193.172.241;
+    proxy_redirect http://127.0.0.1:{{ prod_port_2 }} http://18.193.172.241/node2;
   }
 
 }
