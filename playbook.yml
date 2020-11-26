@@ -1,0 +1,22 @@
+---
+# playbook.yml
+# ansible-playbook playbook.yml
+
+- name: Create Jenkins multiple docker images
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    dev_vol: "jenkins-home-dev"
+    prod_vol: "jenkins-home-prod"
+
+  tasks:
+  - name: "Create jenkins-home-prod Volume"
+    community.general.docker_volume:
+      name: "{{ prod_vol }}"
+
+  - name: "Remove jenkins-home-prod Volume" 
+    community.general.docker_volume:
+      name: "{{ prod_vol }}" 
+      state: absent
+    tags: [ 'never', 'destroy' ]
