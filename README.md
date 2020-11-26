@@ -1,12 +1,10 @@
+# jenkins-docker-datavolume
 
+Setup von mehreren Jenkins Docker Container mit einem Docker Datavolumen.
 
-ubuntu 
+## Lightsail
 
-
-
-jenkins-ng
-
-
+Das Testsystem ist eine AWS Lightsail Instanz mit Ubuntu 20.24 LTS
 
 https://itnext.io/how-to-set-up-python-virtual-environment-on-ubuntu-20-04-a2c7a192938d
 
@@ -20,48 +18,28 @@ $ sudo apt install python3-pip
 
 $ mkdir .virtualenv
 
-
-
 $ pip3 -V
-
 pip 20.0.2 from /usr/lib/python3/dist-packages/pip (python 3.8)
-
-
 
 $ sudo pip3 install virtualenvwrapper
 
 
 
 .bashrc
-
 #Virtualenvwrapper settings:
-
 export WORKON_HOME=$HOME/.virtualenvs
-
 VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-
 . /usr/local/bin/virtualenvwrapper.sh
-
-
 
 $ source ~/.bashrc
 
-
-
 $ mkvirtualenv name_of_your_env
 
-
-
 deactivate
-
 workon
-
 lsvirtualenv
-
 workon name_of_your_env
-
 rmvirtualenv name_of_your_env
-
 cpvirtualenv old_virtual_env new_virtual_env
 
 
