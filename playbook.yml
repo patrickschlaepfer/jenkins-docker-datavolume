@@ -29,6 +29,14 @@
       name: nginx
       state: present
 
+  - name: "Install nginx Configuration"
+    template:
+      src: jenkins.conf.j2
+      dest: /etc/nginx/sites-available/jenkins
+      owner: root
+      group: root
+      mode: "0644"
+
   - name: "Create jenkins-home-1-prod Volume"
     community.general.docker_volume:
       name: "{{ prod_vol_1 }}"
