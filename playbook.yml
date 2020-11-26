@@ -37,6 +37,14 @@
       group: root
       mode: "0644"
 
+  - name: "Enable Jenkins Nginx Proxy"
+    file:
+      src: /etc/nginx/sites-available/jenkins
+      dest: /etc/nginx/sites-enabled/jenkins
+      owner: root
+      group: root
+      state: link
+
   - name: "Create jenkins-home-1-prod Volume"
     community.general.docker_volume:
       name: "{{ prod_vol_1 }}"
